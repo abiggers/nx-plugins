@@ -47,7 +47,7 @@ function copyBuildOutputToBePackaged(options) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         devkit_1.logger.info(`Copying build output files from ${options.package} to ${options.serverlessPackagePath} to be packaged`);
         try {
-            yield fs_extra_1.remove(options.serverlessPackagePath); // remove old build output files (Support macOS issue)
+            // await remove(options.serverlessPackagePath); // remove old build output files (Support macOS issue)
             yield fs_extra_1.copy(options.package, options.serverlessPackagePath);
             devkit_1.logger.info('Done copying build output files.');
             return {

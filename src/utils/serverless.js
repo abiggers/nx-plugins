@@ -87,10 +87,8 @@ class ServerlessWrapper {
                     serviceDir: buildOptions.servicePath,
                     configurationFilename: configFileName,
                 };
-                if (deployOptions &&
-                    deployOptions.function &&
-                    deployOptions.function != '') {
-                    serverlessConfig.servicePath = getPackagePath(deployOptions);
+                if (deployOptions) {
+                    serverlessConfig.serviceDir = getPackagePath(deployOptions);
                 }
                 this.serverless$ = new Serverless(serverlessConfig);
                 // if (componentsV2.runningComponents()) return () => componentsV2.runComponents();
@@ -159,7 +157,7 @@ function runServerlessCommand(options, commands, extraArgs = null) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         devkit_1.logger.info('-----------------START runServerlessCommand----------------------------');
         devkit_1.logger.info('function: runServerlessCommand');
-        devkit_1.logger.info(`options: ${options}`);
+        devkit_1.logger.info(`options: ${JSON.stringify(options)}`);
         // change servicePath to distribution location
         // review: Change options from location to outputpath?\
         let args = getExecArgv(options);

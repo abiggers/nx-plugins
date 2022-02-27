@@ -32,7 +32,7 @@ export interface ServerlessDeployBuilderOptions extends JsonObject {
   port: number;
   watch: boolean;
   package: string;
-  location: string;
+  location?: string;
   stage: string;
   list: boolean;
   updateConfig: boolean;
@@ -50,8 +50,6 @@ export async function deployExecutor(
   options: JsonObject & ServerlessDeployBuilderOptions,
   context: ExecutorContext
 ) {
-  // build into output path before running serverless offline.
-  let packagePath = options.location;
   await ServerlessWrapper.init(options, context);
   if (options.waitUntilTargets && options.waitUntilTargets.length > 0) {
     const results = await runWaitUntilTargets(

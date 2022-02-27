@@ -15,7 +15,7 @@ export interface ServerlessDeployBuilderOptions extends JsonObject {
     port: number;
     watch: boolean;
     package: string;
-    location: string;
+    location?: string;
     stage: string;
     list: boolean;
     updateConfig: boolean;
