@@ -177,7 +177,7 @@ function runServerlessCommand(options, commands, extraArgs = null) {
             const packagePath = getPackagePath(options);
             devkit_1.logger.info(`packagePath: ${packagePath}`);
             devkit_1.logger.info(`Serverless service path is ${packagePath}`);
-            ServerlessWrapper.serverless.serviceDir = packagePath;
+            // ServerlessWrapper.serverless.serviceDir = packagePath;
             yield ServerlessWrapper.serverless.run();
             devkit_1.logger.info(`Serverless service path is ${serviceDir}`);
             ServerlessWrapper.serverless.serviceDir = serviceDir;
