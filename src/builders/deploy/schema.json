@@ -56,6 +56,10 @@
       "default": "YARN",
       "description": "the packager to use for resolving dependencies"
     },
+    "packageIndividually": {
+      "type": "boolean",
+      "description": "set this flag to true if you are packaging functions individually"
+    },
     "serverlessPackagePath": {
       "type": "string",
       "description": "the packaging path for your serverless application (.severless folder)"

@@ -26,6 +26,7 @@ export interface ServerlessDeployBuilderOptions extends JsonObject {
     ignoreScripts: boolean;
     packager?: Packager;
     serverlessPackagePath?: string;
+    packageIndividually?: boolean;
     args?: string;
 }
 export declare function deployExecutor(options: JsonObject & ServerlessDeployBuilderOptions, context: ExecutorContext): Promise<{

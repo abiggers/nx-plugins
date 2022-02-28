@@ -43,6 +43,7 @@ export interface ServerlessDeployBuilderOptions extends JsonObject {
   ignoreScripts: boolean;
   packager?: Packager;
   serverlessPackagePath?: string;
+  packageIndividually?: boolean;
   args?: string;
 }
 

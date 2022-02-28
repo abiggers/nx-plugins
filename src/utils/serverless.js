@@ -87,8 +87,10 @@ class ServerlessWrapper {
                     serviceDir: buildOptions.servicePath,
                     configurationFilename: configFileName,
                 };
-                if (deployOptions) {
-                    serverlessConfig.serviceDir = getPackagePath(deployOptions);
+                if (deployOptions &&
+                    deployOptions.function &&
+                    deployOptions.function != '') {
+                    serverlessConfig.servicePath = getPackagePath(deployOptions);
                 }
                 this.serverless$ = new Serverless(serverlessConfig);
                 // if (componentsV2.runningComponents()) return () => componentsV2.runComponents();
@@ -155,15 +157,10 @@ function getExecArgv(options) {
 exports.getExecArgv = getExecArgv;
 function runServerlessCommand(options, commands, extraArgs = null) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
-        devkit_1.logger.info('-----------------START runServerlessCommand----------------------------');
-        devkit_1.logger.info('function: runServerlessCommand');
-        devkit_1.logger.info(`options: ${JSON.stringify(options)}`);
         // change servicePath to distribution location
         // review: Change options from location to outputpath?\
         let args = getExecArgv(options);
-        devkit_1.logger.info(`args: ${args}`);
         const serviceDir = ServerlessWrapper.serverless.serviceDir;
-        devkit_1.logger.info(`serviceDir: ${serviceDir}`);
         if (extraArgs) {
             args = args.concat(extraArgs);
         }
@@ -175,17 +172,15 @@ function runServerlessCommand(options, commands, extraArgs = null) {
         ServerlessWrapper.serverless.isTelemetryReportedExternally = true;
         try {
             const packagePath = getPackagePath(options);
-            devkit_1.logger.info(`packagePath: ${packagePath}`);
-            devkit_1.logger.info(`Serverless service path is ${packagePath}`);
-            // ServerlessWrapper.serverless.serviceDir = packagePath;
+            if (options.packageIndividually) {
+                ServerlessWrapper.serverless.serviceDir = packagePath;
+            }
             yield ServerlessWrapper.serverless.run();
-            devkit_1.logger.info(`Serverless service path is ${serviceDir}`);
             ServerlessWrapper.serverless.serviceDir = serviceDir;
         }
         catch (ex) {
             throw new Error(`There was an error with the build. ${ex}.`);
         }
-        devkit_1.logger.info('-----------------END runServerlessCommand----------------------------');
     });
 }
 exports.runServerlessCommand = runServerlessCommand;
