@@ -172,11 +172,7 @@ function runServerlessCommand(options, commands, extraArgs = null) {
         ServerlessWrapper.serverless.isTelemetryReportedExternally = true;
         try {
             const packagePath = getPackagePath(options);
-            if (options.packageIndividually) {
-                ServerlessWrapper.serverless.serviceDir = packagePath;
-            } else {
-                ServerlessWrapper.serverless.serviceDir = './'
-            }
+            ServerlessWrapper.serverless.serviceDir = packagePath;
             yield ServerlessWrapper.serverless.run();
             ServerlessWrapper.serverless.serviceDir = serviceDir;
         }
