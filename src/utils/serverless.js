@@ -169,6 +169,7 @@ function runServerlessCommand(options, commands, extraArgs = null) {
             commands: commands,
             options: args,
         };
+        devkit_1.logger.info(JSON.stringify(ServerlessWrapper.serverless.processedInput));
         ServerlessWrapper.serverless.isTelemetryReportedExternally = true;
         try {
             const packagePath = getPackagePath(options);
