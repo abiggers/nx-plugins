@@ -174,6 +174,8 @@ function runServerlessCommand(options, commands, extraArgs = null) {
             const packagePath = getPackagePath(options);
             if (options.packageIndividually) {
                 ServerlessWrapper.serverless.serviceDir = packagePath;
+            } else {
+                ServerlessWrapper.serverless.serviceDir = 'dist/.serverlessPackages/'
             }
             yield ServerlessWrapper.serverless.run();
             ServerlessWrapper.serverless.serviceDir = serviceDir;
