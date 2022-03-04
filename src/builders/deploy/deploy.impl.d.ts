@@ -15,7 +15,7 @@ export interface ServerlessDeployBuilderOptions extends JsonObject {
     port: number;
     watch: boolean;
     package: string;
-    location?: string;
+    location: string;
     stage: string;
     list: boolean;
     updateConfig: boolean;
@@ -26,7 +26,6 @@ export interface ServerlessDeployBuilderOptions extends JsonObject {
     ignoreScripts: boolean;
     packager?: Packager;
     serverlessPackagePath?: string;
-    packageIndividually?: boolean;
     args?: string;
 }
 export declare function deployExecutor(options: JsonObject & ServerlessDeployBuilderOptions, context: ExecutorContext): Promise<{

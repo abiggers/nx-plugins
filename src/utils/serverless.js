@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.makeDistFileReadyForPackaging = exports.runServerlessCommand = exports.getExecArgv = exports.ServerlessWrapper = void 0;
 const tslib_1 = require("tslib");
-const Serverless = require("serverless/lib/Serverless");
+const Serverless = require("serverless/lib/serverless");
 const readConfiguration = require("serverless/lib/configuration/read");
 const path = require("path");
 const fs = require("fs");
@@ -12,6 +12,7 @@ const devkit_1 = require("@nrwl/devkit");
 const gracefulFs = require("graceful-fs");
 gracefulFs.gracefulify(fs); // fix serverless too many files open error on windows. /wick
 class ServerlessWrapper {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     constructor() { }
     static get serverless() {
         if (this.serverless$ === null) {
@@ -53,6 +54,7 @@ class ServerlessWrapper {
                 try {
                     if (fs.existsSync(path.join(buildOptions.servicePath, buildOptions.processEnvironmentFile))) {
                         devkit_1.logger.debug('Loading Environment Variables');
+                        // eslint-disable-next-line @typescript-eslint/no-var-requires
                         require('dotenv-json')({
                             path: path.join(buildOptions.servicePath, buildOptions.processEnvironmentFile),
                         });
@@ -87,10 +89,8 @@ class ServerlessWrapper {
                     serviceDir: buildOptions.servicePath,
                     configurationFilename: configFileName,
                 };
-                if (deployOptions &&
-                    deployOptions.function &&
-                    deployOptions.function != '') {
-                    serverlessConfig.servicePath = getPackagePath(deployOptions);
+                if (deployOptions) {
+                    serverlessConfig.serviceDir = getPackagePath(deployOptions);
                 }
                 this.serverless$ = new Serverless(serverlessConfig);
                 // if (componentsV2.runningComponents()) return () => componentsV2.runComponents();
@@ -169,10 +169,10 @@ function runServerlessCommand(options, commands, extraArgs = null) {
             commands: commands,
             options: args,
         };
-        devkit_1.logger.info(JSON.stringify(ServerlessWrapper.serverless.processedInput));
         ServerlessWrapper.serverless.isTelemetryReportedExternally = true;
         try {
             const packagePath = getPackagePath(options);
+            devkit_1.logger.debug(`Serverless service path is ${packagePath}`);
             ServerlessWrapper.serverless.serviceDir = packagePath;
             yield ServerlessWrapper.serverless.run();
             ServerlessWrapper.serverless.serviceDir = serviceDir;

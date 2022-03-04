@@ -12,6 +12,8 @@ const devkit_1 = require("@nrwl/devkit");
 gracefulFs.gracefulify(fs); // TODO: 0 this is not needed here anymore?
 function deployExecutor(options, context) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
+        // build into output path before running serverless offline.
+        let packagePath = options.location;
         yield serverless_1.ServerlessWrapper.init(options, context);
         if (options.waitUntilTargets && options.waitUntilTargets.length > 0) {
             const results = yield target_schedulers_1.runWaitUntilTargets(options.waitUntilTargets, context);
